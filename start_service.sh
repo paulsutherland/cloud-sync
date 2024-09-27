@@ -63,7 +63,16 @@ myArray=($addresses)
 # echo "writing config file $PWD/examples/synchronisedvideo/src/js/config.js"
 # echo "module.exports = { hostname: \"${myArray[0]}\", port:9001};" > $PWD/examples/synchronisedvideo/src/js/config.js
 echo "calling docker-compose up"
-# grunt build_lib
-sudo docker-compose up -d --scale synccontroller=3
+# Update the docker-compose command
+docker-compose up -d --build --scale synccontroller=3
+
+# Add error handling and logging
+if [ $? -ne 0 ]; then
+    echo "Error: Docker Compose failed to start services. Check the logs for more details."
+    docker-compose logs
+    exit 1
+fi
+
+echo "Services started successfully. Use 'docker-compose logs' to view service logs."
 
 

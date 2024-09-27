@@ -1,4 +1,5 @@
 var path = require("path");
+var mkdirp = require('mkdirp');
 
 module.exports = function(grunt) {
     
@@ -9,6 +10,9 @@ module.exports = function(grunt) {
         },
         
         copy: {
+            options: {
+                mkdir: true
+            },
             main: {
                 files: [
                     { expand: true, cwd: "node_modules/purecss/build", src: ["*.css"], dest: "www/css/" },
@@ -74,7 +78,16 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-webpack");
     grunt.loadNpmTasks("grunt-express-server");
 
-    grunt.registerTask("build", [ "clean", "copy", "webpack"]);
+    // New task to create necessary directories
+    grunt.registerTask('create-dirs', 'Create necessary directories', function() {
+        var dirs = ['www', 'www/css', 'www/js'];
+        dirs.forEach(function(dir) {
+            mkdirp.sync(dir);
+            grunt.log.writeln('Directory "' + dir + '" created.');
+        });
+    });
+
+    // Update the build task to include the new create-dirs task
+    grunt.registerTask("build", ["clean", "create-dirs", "copy", "webpack"]);
     grunt.registerTask("default", ["build"]);
 };
-    

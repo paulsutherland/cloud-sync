@@ -4,8 +4,8 @@
   "description": "Synchronises video presentations across different browsers by means of the CloudSyncKit",
   "main": "src/index.js",
   "scripts": {
-    "start": "grunt && node server.js",
-    "test": "echo \"no tests specified\""
+    "build": "grunt",
+    "start": "node server.js"
   },
   "author": "Christoph Ziegler (IRT)",
   "license": "UNLICENSED",
@@ -16,6 +16,7 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-express-server": "^0.5.3",
     "grunt-webpack": "^3.0.2",
+    "mkdirp": "^3.0.1",
     "webpack": "^3.7.1",
     "webpack-dev-server": "^3.2.1"
   },
